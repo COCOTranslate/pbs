@@ -31,7 +31,7 @@ import pbclient
 import simplejson as json
 from simplejson import JSONDecodeError
 import jsonschema
-import ConfigParser
+import configparser
 import os.path
 from os.path import expanduser
 from helpers import *
@@ -49,7 +49,7 @@ class Config(object):
         self.project = None
         self.all = None
         self.pbclient = pbclient
-        self.parser = ConfigParser.ConfigParser()
+        self.parser = configparser.ConfigParser()
 
 pass_config = click.make_pass_decorator(Config, ensure=True)
 
@@ -72,7 +72,7 @@ def cli(config, server, api_key, all, credentials, project):
         config.api_key = config.parser.get(credentials, 'apikey')
         try:
             config.all = config.parser.get(credentials, 'all')
-        except ConfigParser.NoOptionError:
+        except configparser.NoOptionError:
             config.all = None
     if server:
         config.server = server
@@ -212,3 +212,4 @@ def update_task_redundancy(config, task_id, redundancy):
     else:
         res = _update_tasks_redundancy(config, task_id, redundancy)
         click.echo(res)
+      
